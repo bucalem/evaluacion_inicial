@@ -5,11 +5,12 @@ library(ggplot2)
 library(vroom)
 library(forcats)
 library(purrr)
-injuries <- vroom::vroom("neiss/injuries.tsv.gz")
+library(shiny)
+injuries <- vroom::vroom("data/injuries.tsv.gz")
 
-products <- vroom::vroom("neiss/products.tsv")
+products <- vroom::vroom("data/products.tsv")
 
-population <- vroom::vroom("neiss/population.tsv")
+population <- vroom::vroom("data/population.tsv")
 
 prod_codes <- setNames(products$prod_code, products$title)
 
