@@ -1,9 +1,14 @@
-# evaluacion_inicial
-Evaluación inicial para detectar las habilidades, conocimientos y destrezas de candidatos a colaborar en Morant Consultores.
+# Evaluación inicial
 
-Contesta las siguientes preguntas.
+## Objetivo
 
-Pregunta 1
+Detectar las habilidades, conocimientos y destrezas de candidatos a colaborar en Morant Consultores.
+
+## Instrucciones
+
+Conteste las siguientes preguntas. Es de suma utilidad que comparta las soluciones que plantee sin importar si llegó a la conclusión o al resultado final. Eso nos dará mucha información acerca de qué áreas de oportunidad tiene. Cuando termine favor de enviar un archivo R markdown con sus resultados. 
+
+## Pregunta 1
 
 Descarga la base de datos electoral de X. La base de datos contiene las variables,
 casillas, municipio, partido_a, partido_b, partido_c, lista_nominal y corresponden a datos de una elección ficticia. Suponga que tiene que reportar a un cliente los resultados de la elección. 
@@ -12,7 +17,7 @@ Elige la información que reportarías e inclúyela en este documento. El report
 
 Para reportar puedes utilizar texto, gráficas, mapas o tablas. Recuerda que un mejor reporte es aquel que tiene mayor contenido de relevancia con la menor cantidad de elementos. Si requieres de un mapa, puedes descargarlo en X.
 
-Pregunta 2
+## Pregunta 2
 
 Descarga la base de datos X que contiene información de una encuesta ficticia. Esta encuesta tiene un diseño muestral polietápico que incluye etapas de estratos y etapas de conglomerados. La base de datos tiene un identificador de la persona, el partido por el que votaría  y el peso correspondiente a cada entrevistado para la estimación. 
 
@@ -24,14 +29,15 @@ Ahora supón que la muestra fue extraída bajo un esquema de muestreo aleatorio 
 
 ¿Qué podrías concluir de estos intervalos?
 
-Pregunta 3
+## Pregunta 3
 
 Descarga la base de datos X. Contiene una lista de municipios también ficticia que tiene las siguientes variables: población, población de 15 años o más analfabeta, población de 6 a 14 años que no asiste a la escuela, población sin derechohabiencia a servicios de salud, Viviendas con piso de tierra. Todas estas son variables que expresan un tipo de rezago. Tu cliente es el Gobierno Federal y quiere hacer un programa social que atienda el rezago, en general. Te pide elaborar un ranking con el propósito de saber a que municipios da prioridad. Agrega una variable a la base de datos que exprese el orden de prioridad en donde 1 es el municipio más rezagado y nrow(bd) es el municipio menos rezagado. Para ello debes utilizar un criterio de rezago, justifica que criterio utilizarías. Puedes utilizar combinaciones lineales de las variables o técnicas de reducción de dimensionalidad como análisis de componentes principales.
 
 
-Pregunta 5 (Shiny)
+## Pregunta 4 (Shiny)
 
 En el script eda.R hay una serie de pasos para obtener tres tablas resumen y dos gráficas. Asegúrate de que puedas correr el script completo sin ningún problema. Como verás, sólo está ejemplificado para accidentes en los baños. 
+
 1.	Agrega donde sea pertinente este código al script app.R para que el usuario de la aplicación pueda visualizar las tablas y gráficas. 
 2.	Modifica el código para que reaccione a cualquier tipo de producto que el usuario elija, no sólo a los accidentes en baños.
 
