@@ -10,16 +10,16 @@ Conteste las siguientes preguntas. Es de suma utilidad que comparta las solucion
 
 ## Pregunta 1
 
-Descarga la base de datos electoral de X. La base de datos contiene las variables,
-casillas, municipio, partido_a, partido_b, partido_c, lista_nominal y corresponden a datos de una elección ficticia. Suponga que tiene que reportar a un cliente los resultados de la elección. 
+Descarga la base de datos electoral ubicada en data/electoral.rda. La base de datos contiene las variables,
+casillas, partido_a, partido_b, partido_c, votos_total, lista_nominal y corresponden a datos de una elección ficticia. Suponga que tiene que reportar a un cliente los resultados de la elección. 
 
-Elige la información que reportarías e inclúyela en este documento. El reporte puede incluir, pero no necesariamente limitarse a comunicar: en qué lugar quedó cada partido, el número de casillas en las que resultó ganador cada partido, una descripción de la participación ciudadana. 
+Elige la información que reportarías e inclúyela en el R markdown donde entregarás tus respuestas. El reporte puede incluir, pero no necesariamente limitarse a comunicar: en qué lugar quedó cada partido, el número de casillas en las que resultó ganador cada partido, una descripción de la participación ciudadana. 
 
-Para reportar puedes utilizar texto, gráficas, mapas o tablas. Recuerda que un mejor reporte es aquel que tiene mayor contenido de relevancia con la menor cantidad de elementos. Si requieres de un mapa, puedes descargarlo en X.
+Para reportar puedes utilizar texto, gráficas, mapas o tablas. Recuerda que un mejor reporte es aquel que tiene mayor contenido de relevancia con la menor cantidad de elementos. Si requieres de un mapa, puedes utilizar el ubicado en data/mapa.rda. Para esto deberás tener instalado el paquete sf.
 
 ## Pregunta 2
 
-Descarga la base de datos X que contiene información de una encuesta ficticia. Esta encuesta tiene un diseño muestral polietápico que incluye etapas de estratos y etapas de conglomerados. La base de datos tiene un identificador de la persona, el partido por el que votaría  y el peso correspondiente a cada entrevistado para la estimación. 
+Descarga la base de datos data/encuesta_f.rda que contiene información de una encuesta ficticia. Esta encuesta tiene un diseño muestral polietápico que incluye etapas de estratos y etapas de conglomerados. La base de datos tiene un identificador de la persona, el partido por el que votaría  y el peso correspondiente a cada entrevistado para la estimación. 
 
 Presenta una estimación puntual de la proporción de personas a favor de cada partido.
 
