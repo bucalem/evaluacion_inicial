@@ -6,7 +6,7 @@ library(vroom)
 library(forcats)
 library(purrr)
 library(shiny)
-injuries <- vroom::vroom("data/injuries.tsv.gz")
+injuries <- vroom::vroom("data/injuries.tsv")
 
 products <- vroom::vroom("data/products.tsv")
 
