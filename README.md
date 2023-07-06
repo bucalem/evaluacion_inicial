@@ -32,7 +32,41 @@ Ahora suponga que la muestra fue extraída bajo un esquema de muestreo aleatorio
 
 Utilice la base de datos `data/municipios_rezago.csv`. Contiene una lista de municipios también ficticia que tiene las siguientes variables: población, población de 15 años o más analfabeta, población de 6 a 14 años que no asiste a la escuela, población sin derechohabiencia a servicios de salud y viviendas con piso de tierra. Todas estas son variables que expresan un tipo de rezago. Imagine que su cliente es el Gobierno Federal y quiere hacer un programa social que atienda el rezago, en general. Le pide elaborar un ranking con el propósito de saber a qué municipios dar mayor prioridad. Agregue una variable a la base de datos que exprese el orden de prioridad en donde 1 es el municipio más rezagado y `nrow(bd)` es el municipio menos rezagado. Para ello debe utilizar un criterio de rezago, justifica qué criterio utilizarías. Puedes utilizar combinaciones lineales de las variables o técnicas de reducción de dimensionalidad como análisis de componentes principales.
 
-## Pregunta 4 (Shiny)
+## Pregunta 4
+
+Encuentra el error y modifica el siguiente código para encontrar los números primos correctos que se encuentren entre dos números enteros.
+
+```
+find_primes <- function(start, end) {
+  primes <- c()
+  
+  for (i in start:end) {
+    if (i < 2) {
+      next 
+    }
+    if (i == 2) {
+      primes <- c(primes, i)  
+      next
+    }
+    is_prime <- FALSE
+    for (j in 2:ceiling(sqrt(i))) {
+      if (j == 2 || j %% 2 != 0) {
+        if (i %% j == 0) {
+          is_prime <- TRUE
+          break
+        }
+      }
+    }
+    if (is_prime) {
+      primes <- c(primes, i)
+    }
+  }
+  
+  return(primes)
+}
+```
+
+## Pregunta 5 (Shiny)
 
 En el script `R/eda.R` hay una serie de pasos para obtener tres tablas resumen y dos gráficas. Asegure que pueda correr el script completo sin ningún problema. Como verá, sólo está ejemplificado para accidentes en los baños. 
 
