@@ -37,6 +37,7 @@ Utilice la base de datos `data/municipios_rezago.csv`. Contiene una lista de mun
 Encuentra el error y modifica el siguiente código para encontrar los números primos correctos que se encuentren entre dos números enteros.
 
 ```
+## R
 find_primes <- function(start, end) {
   primes <- c()
   
@@ -65,6 +66,32 @@ find_primes <- function(start, end) {
   return(primes)
 }
 ```
+
+```
+#Python
+import math
+
+def find_primes(start, end):
+    primes = []
+    
+    for i in range(start, end+1):
+        if i < 2:
+            continue
+        if i == 2:
+            primes.append(i)
+            continue
+        is_prime = False
+        for j in range(2, int(math.sqrt(i)) + 1):
+            if j == 2 or j % 2 != 0:
+                if i % j == 0:
+                    is_prime = True
+                    break
+        if is_prime:
+            primes.append(i)
+    
+    return primes
+```
+
 
 ## Pregunta 5 (Shiny)
 
