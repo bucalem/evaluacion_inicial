@@ -6,7 +6,8 @@ Detectar las habilidades, conocimientos y destrezas de candidatos a colaborar en
 
 ## Instrucciones
 
-Conteste las siguientes preguntas. Es de suma utilidad que comparta las soluciones que plantee sin importar si llegó a la conclusión o al resultado final. Eso nos dará mucha información acerca de qué áreas de oportunidad tiene. Cuando termine favor de enviar un archivo R markdown con sus resultados. Incluya todo el código que utilizó en dicho documento para llegar a sus conclusiones. 
+Conteste las siguientes preguntas. Es de suma utilidad que comparta las soluciones que plantee sin importar si llegó a la conclusión o al resultado final. Eso nos dará mucha información acerca de qué áreas de oportunidad tiene. Cuando termine favor de enviar un archivo R markdown con sus resultados. Incluya todo el código que utilizó en dicho documento para llegar a sus conclusiones. Una vez que haya realizado sus resultados de las preguntas 1 y 3, por favor haga una presentación en la que exponga sus conclusiones al cliente que le que encargó el análisis de la elección.
+
 
 ## Pregunta 1
 
@@ -30,7 +31,7 @@ Ahora suponga que la muestra fue extraída bajo un esquema de muestreo aleatorio
 
 ## Pregunta 3
 
-Utilice la base de datos `data/municipios_rezago.csv`. Contiene una lista de municipios también ficticia que tiene las siguientes variables: población, población de 15 años o más analfabeta, población de 6 a 14 años que no asiste a la escuela, población sin derechohabiencia a servicios de salud y viviendas con piso de tierra. Todas estas son variables que expresan un tipo de rezago. Imagine que su cliente es el Gobierno Federal y quiere hacer un programa social que atienda el rezago, en general. Le pide elaborar un ranking con el propósito de saber a qué municipios dar mayor prioridad. Agregue una variable a la base de datos que exprese el orden de prioridad en donde 1 es el municipio más rezagado y `nrow(bd)` es el municipio menos rezagado. Para ello debe utilizar un criterio de rezago, justifica qué criterio utilizarías. Puedes utilizar combinaciones lineales de las variables o técnicas de reducción de dimensionalidad como análisis de componentes principales.
+Utilice la base de datos `data/municipios_rezago.csv`. Contiene una lista de municipios también ficticia que tiene las siguientes variables: población, población de 15 años o más analfabeta, población de 6 a 14 años que no asiste a la escuela, población sin derechohabiencia a servicios de salud y viviendas con piso de tierra. Todas estas son variables que expresan un tipo de rezago. Imagine que su cliente es el Gobierno Federal y quiere hacer un programa social que atienda el rezago, en general. Le pide elaborar un ranking con el propósito de saber a qué municipios dar mayor prioridad. Agregue una variable a la base de datos que exprese el orden de prioridad en donde 1 es el municipio más rezagado y `nrow(bd)` es el municipio menos rezagado. Para ello debe utilizar un criterio de rezago, justifica qué criterio utilizarías. Puedes utilizar combinaciones lineales de las variables o técnicas de reducción de dimensionalidad como análisis de componentes principales. Recuerde que al concluir sus resultados de la pregunta 3, debe realizar una presentación conjunto a los resultados de la pregunta 1 e incluirlo con las demás respuestas.
 
 ## Pregunta 4
 
