@@ -6,7 +6,7 @@ Detectar las habilidades, conocimientos y destrezas de candidatos a colaborar en
 
 ## Instrucciones
 
-Conteste las siguientes preguntas. Es de suma utilidad que comparta las soluciones que plantee sin importar si llegó a la conclusión o al resultado final. Eso nos dará mucha información acerca de qué áreas de oportunidad tiene. Cuando termine favor de enviar un archivo R markdown con sus resultados. Incluya todo el código que utilizó en dicho documento para llegar a sus conclusiones. Una vez que haya realizado sus resultados de las preguntas 1 y 3, por favor haga una presentación en la que exponga sus conclusiones al cliente que le que encargó el análisis de la elección.
+Conteste las siguientes preguntas. Es de suma utilidad que comparta las soluciones que plantee sin importar si llegó a la conclusión o al resultado final. Eso nos dará mucha información acerca de qué áreas de oportunidad tiene. Cuando termine favor de enviar un archivo R markdown con sus resultados. Incluya todo el código que utilizó en dicho documento para llegar a sus conclusiones. Una vez que haya realizado sus resultados de las preguntas 1 y 3, por favor haga una presentación en la que exponga sus conclusiones según el cliente que le encargó el análisis. Este debe incluir aquello que usted considere sería de interés para su cliente, pero que permanezca una presentación concisa: debe brindar una visión clara de los resultados con una lectura breve.
 
 
 ## Pregunta 1
