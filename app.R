@@ -6,12 +6,14 @@ library(vroom)
 library(forcats)
 library(purrr)
 library(shiny)
-injuries <- vroom::vroom("data/injuries.tsv")
+# Source the functions file
+source("R/eda.R")
 
-products <- vroom::vroom("data/products.tsv")
-
-population <- vroom::vroom("data/population.tsv")
-
+# Load data
+data <- load_data()
+injuries <- data$injuries
+products <- data$products
+population <- data$population
 prod_codes <- setNames(products$prod_code, products$title)
 
 
@@ -35,32 +37,34 @@ ui <- fluidPage(
   )
 )
 
-
 server <- function(input, output, session) {
-  selected <- reactive(injuries %>% filter(prod_code == input$code) %>% head())
+  selected_data <- reactive({
+    explore_product(injuries, products, population, input$code)
+  })
 
   output$diag <- renderTable({
-    ####
+    selected_data()$summary_diag
   }, width = "100%")
+
   output$body_part <- renderTable({
-    ###
+    selected_data()$summary_body_part
   }, width = "100%")
+
   output$location <- renderTable({
-    ###
+    selected_data()$summary_location
   }, width = "100%")
-
-  summary <- reactive({
-
-  })
 
   output$age_sex <- renderPlot({
-    if(input$y == "rate"){
-      ####
+    if (input$y == "rate") {
+      ggplot(selected_data()$summary_age_sex, aes(age, rate, colour = sex)) +
+        geom_line(na.rm = TRUE) +
+        labs(y = "Lesiones por cada 10.000 personas")
     } else {
-      ####
+      ggplot(selected_data()$summary_age_sex, aes(age, n, colour = sex)) +
+        geom_line() +
+        labs(y = "Número estimado de lesiones")
     }
   })
-
 }
 
 shinyApp(ui, server)

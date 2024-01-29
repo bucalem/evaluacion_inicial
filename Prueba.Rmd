@@ -1,0 +1,218 @@
+---
+title: "Prueba"
+author: "Aguilar Bustamante"
+date: "2024-01-28"
+output: pdf_document
+---
+
+```{r Pregunta_1}
+knitr::opts_chunk$set(echo = TRUE)
+
+#Se intentó compilar enviroment, GCC no lo permitió
+#options(renv.config.mran.enabled = FALSE)
+#renv::restore()
+
+rm(list=ls())
+if(!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,sf)
+
+electoral <- readRDS(file = "data/electoral.rda")
+electoral <- electoral %>% 
+  group_by(casilla) %>% 
+  reframe(Votos_partido_A = sum(`partido_a`),
+          Votos_partido_B = sum(`partido_b`),
+          Votos_partido_C =sum(`partido_c`),
+          Votos_Totales =sum(`votos_total`), 
+          Lista_Nominal=sum(`lista_nominal`),
+          Porc_partido_A = (Votos_partido_A/Votos_Totales), Porc_partido_B = (Votos_partido_B/Votos_Totales),
+          Porc_partido_C = (Votos_partido_C/Votos_Totales), 
+          Participacion = (Votos_Totales/Lista_Nominal)) %>% 
+  distinct() %>% 
+  mutate(Ganador = case_when(
+    (`Porc_partido_B` > `Porc_partido_A` & `Porc_partido_B` > `Porc_partido_C`) ~ "partido_B",
+    (`Porc_partido_A` > `Porc_partido_B` & `Porc_partido_A` > `Porc_partido_C`) ~ "partido_A",
+    (`Porc_partido_B` == `Porc_partido_A` & `Porc_partido_B` > `Porc_partido_C`) ~ "Empate",
+    TRUE ~ "partido_C"
+  ), 
+  segundo_lugar = case_when(
+    Ganador == "partido_B" ~ case_when(
+      `Porc_partido_A` > `Porc_partido_C` ~ "partido_A", TRUE ~ "partido_C"),
+    Ganador == "partido_A" ~ case_when(
+      `Porc_partido_B` > `Porc_partido_C` ~ "partido_B", TRUE ~ "partido_C"),
+    TRUE ~ case_when(
+      `Porc_partido_B` >= `Porc_partido_A` ~ "partido_B", TRUE ~ "partido_A"))) %>% 
+  mutate(ventaja = case_when(
+    Ganador == "partido_B" ~ `Porc_partido_B` - case_when(
+      segundo_lugar == "partido_A" ~ `Porc_partido_A`,
+      segundo_lugar == "partido_C" ~ `Porc_partido_C`),
+    Ganador == "partido_A" ~ `Porc_partido_A` - case_when(
+      segundo_lugar == "partido_B" ~ `Porc_partido_B`,
+      segundo_lugar == "partido_C" ~ `Porc_partido_C`),
+    Ganador == "partido_C" ~ `Porc_partido_C` - case_when(
+      segundo_lugar == "partido_A" ~ `Porc_partido_A`,
+      segundo_lugar == "partido_B" ~ `Porc_partido_B`),
+    TRUE ~ 0 
+  )) %>%  mutate(across(c(7:10,13), ~ round(., digits = 6)))
+
+#mapa
+
+mapa <- readRDS("data/mapa.rda")
+mapa_datos <- left_join(electoral, mapa, by = "casilla", na_matches = "na")
+mapa_datos <- st_make_valid(mapa_datos)
+
+sumario <- mapa_datos %>% 
+  summarise(
+    Casillas_Ganadas_A = sum(Ganador == "partido_A"),
+    Votos_partido_A = sum(Votos_partido_A),
+    Casillas_Ganadas_B = sum(Ganador == "partido_B"),
+    Votos_partido_B = sum(Votos_partido_B),
+    Casillas_Ganadas_C = sum(Ganador == "partido_C"),
+    Votos_partido_C = sum(Votos_partido_C))
+
+
+
+
+```
+
+## Pregunta 1
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Pregunta 5 (Shiny)
+
+```{r eda.R, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+library(vroom)
+library(tidyverse)
+
+load_data <- function() {
+  injuries <- vroom::vroom("data/injuries.tsv")
+  products <- vroom::vroom("data/products.tsv")
+  population <- vroom::vroom("data/population.tsv")
+  return(list(injuries = injuries, products = products, population = population))
+}
+
+explore_product <- function(injuries, products, population, product_code) {
+  selected <- injuries %>% filter(prod_code == product_code)
+
+  summary_location <- selected %>%
+    count(location, wt = weight, sort = TRUE)
+
+  summary_body_part <- selected %>%
+    count(body_part, wt = weight, sort = TRUE)
+
+  summary_diag <- selected %>%
+    count(diag, wt = weight, sort = TRUE)
+
+  summary_age_sex <- selected %>%
+    count(age, sex, wt = weight) %>%
+    left_join(population, by = c("age", "sex")) %>%
+    mutate(rate = n / population * 1e4)
+
+  return(list(
+    summary_location = summary_location,
+    summary_body_part = summary_body_part,
+    summary_diag = summary_diag,
+    summary_age_sex = summary_age_sex
+  ))
+}
+
+```
+
+```{r app.R, echo=TRUE, paged.print=FALSE}
+
+library(dplyr)
+library(ggplot2)
+library(vroom)
+library(forcats)
+library(purrr)
+library(shiny)
+# Source the functions file
+source("R/eda.R")
+
+# Load data
+data <- load_data()
+injuries <- data$injuries
+products <- data$products
+population <- data$population
+prod_codes <- setNames(products$prod_code, products$title)
+
+
+ui <- fluidPage(
+  fluidRow(
+    column(8,
+           selectInput("code", "Product",
+                       choices = setNames(products$prod_code, products$title),
+                       width = "100%"
+           )
+    ),
+    column(2, selectInput("y", "Y axis", c("rate", "count")))
+  ),
+  fluidRow(
+    column(4, tableOutput("diag")),
+    column(4, tableOutput("body_part")),
+    column(4, tableOutput("location"))
+  ),
+  fluidRow(
+    column(12, plotOutput("age_sex"))
+  )
+)
+
+server <- function(input, output, session) {
+  selected_data <- reactive({
+    explore_product(injuries, products, population, input$code)
+  })
+
+  output$diag <- renderTable({
+    selected_data()$summary_diag
+  }, width = "100%")
+
+  output$body_part <- renderTable({
+    selected_data()$summary_body_part
+  }, width = "100%")
+
+  output$location <- renderTable({
+    selected_data()$summary_location
+  }, width = "100%")
+
+  output$age_sex <- renderPlot({
+    if (input$y == "rate") {
+      ggplot(selected_data()$summary_age_sex, aes(age, rate, colour = sex)) +
+        geom_line(na.rm = TRUE) +
+        labs(y = "Lesiones por cada 10.000 personas")
+    } else {
+      ggplot(selected_data()$summary_age_sex, aes(age, n, colour = sex)) +
+        geom_line() +
+        labs(y = "Número estimado de lesiones")
+    }
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+```{r shiny, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, shiny, echo=}
+library(shiny)
+
+# Define the Shiny app
+app <- shinyApp(ui, server)
+
+# Run the Shiny app
+runApp(app, port = 8000, host = "0.0.0.0")
+```
