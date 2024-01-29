@@ -5,7 +5,9 @@ date: "2024-01-28"
 output: pdf_document
 ---
 
-```{r Pregunta_1}
+## Pregunta 1
+
+```{r Pregunta_1, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 #Se intentó compilar enviroment, GCC no lo permitió
@@ -14,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 rm(list=ls())
 if(!require('pacman')) install.packages('pacman')
-pacman::p_load(tidyverse,sf)
+pacman::p_load(tidyverse,sf,RColorBrewer)
 
 electoral <- readRDS(file = "data/electoral.rda")
 electoral <- electoral %>% 
@@ -58,45 +60,19 @@ electoral <- electoral %>%
 
 mapa <- readRDS("data/mapa.rda")
 mapa_datos <- left_join(electoral, mapa, by = "casilla", na_matches = "na")
-mapa_datos <- st_make_valid(mapa_datos)
 
-sumario <- mapa_datos %>% 
-  summarise(
-    Casillas_Ganadas_A = sum(Ganador == "partido_A"),
-    Votos_partido_A = sum(Votos_partido_A),
-    Casillas_Ganadas_B = sum(Ganador == "partido_B"),
-    Votos_partido_B = sum(Votos_partido_B),
-    Casillas_Ganadas_C = sum(Ganador == "partido_C"),
-    Votos_partido_C = sum(Votos_partido_C))
-
-
-
+mapa_datos %>% 
+  ggplot() + 
+  aes(fill = `Participacion`, geometry = geometry) +
+  theme_bw() +
+  geom_sf(color = 'black', size = 0.05) +
+  ggtitle("Participación electoral")
 
 ```
-
-## Pregunta 1
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 ## Pregunta 5 (Shiny)
 
-```{r eda.R, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
+```{r eda.R, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
 library(vroom)
 library(tidyverse)
 
@@ -134,7 +110,7 @@ explore_product <- function(injuries, products, population, product_code) {
 
 ```
 
-```{r app.R, echo=TRUE, paged.print=FALSE}
+```{r app.R, message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE, echo = FALSE}
 
 library(dplyr)
 library(ggplot2)
@@ -205,14 +181,4 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 
-```
-
-```{r shiny, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, shiny, echo=}
-library(shiny)
-
-# Define the Shiny app
-app <- shinyApp(ui, server)
-
-# Run the Shiny app
-runApp(app, port = 8000, host = "0.0.0.0")
 ```
